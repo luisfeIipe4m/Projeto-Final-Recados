@@ -6,8 +6,12 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
+// Controller responsável por cadastro, login e logout.
+// Usa Laravel Sanctum para gerar os tokens consumidos pelo front-end.
 class AuthController extends Controller
 {
+    // POST /api/register
+    // Cria um novo usuário com a senha já criptografada.
     public function register(Request $request)
     {
         $dadosValidados = $request->validate([
@@ -25,6 +29,8 @@ class AuthController extends Controller
         return response()->json($novoUsuario, 201);
     }
 
+    // POST /api/login
+    // Confere email/senha e, se baterem, devolve um token de acesso.
     public function login(Request $request)
     {
         $credenciais = $request->validate([
@@ -42,6 +48,7 @@ class AuthController extends Controller
             ], 401);
         }
 
+        // Gera um novo token de acesso (usado pelo front no header Authorization)
         $token = $usuario->createToken('auth_token')->plainTextToken;
 
         return response()->json([
@@ -50,6 +57,8 @@ class AuthController extends Controller
         ]);
     }
 
+    // POST /api/logout
+    // Apaga todos os tokens do usuário logado, invalidando o acesso atual.
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
