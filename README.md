@@ -1,7 +1,8 @@
-\# Lista de Recados
+## Lista de Recados
+
 Aplicação fullstack com React no front-end e Laravel no back-end.
 
-\## Integrantes
+## Integrantes
 
 \- Luis Felipe Barbosa da Silva
 
